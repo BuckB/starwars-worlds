@@ -9,7 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Bem-vindos ao Mundos de</h1>
+          <h1 className="App-title">Bem-vindos aos Mundos de</h1>
           <img src={logo} className="App-logo" alt="logo" />
           <p className="App-intro">
             Quanto você conhece do Universo Star Wars?

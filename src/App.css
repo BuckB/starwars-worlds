@@ -1,7 +1,10 @@
-.App {}
+.App {
+  justify-content: center;
+}
 
 .App-logo {
   height: 80px;
+  margin-bottom: .5rem;
 }
 
 .App-header {
