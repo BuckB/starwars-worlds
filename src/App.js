@@ -15,9 +15,11 @@ class App extends Component {
             Quanto você conhece do Universo Star Wars?
           </p>
         </header>
-        <div className="container-fluid mt-4 col-md-6">
-          <div className="justify-content-center">
+        <div className="container mt-4">
+          <div className="row justify-content-center">
               <Cards />
+          </div>
+          <div className="row justify-content-center">
               <Button />
           </div>
         </div>
