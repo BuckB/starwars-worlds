@@ -1,68 +1,62 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Button from './Button';
+import Selecao from './Selecao';
 
 class Cards extends Component {
     constructor(props) {
         super(props);
+
+        this.trocaPlaneta = this.trocaPlaneta.bind(this);
+
         this.state = {
             error: null,
             isLoaded: false,
-            planeta: []
+            planeta: [],
+            id: Math.floor(Math.random() * (61 - 1) + 1),
+            resposta: {
+                populacao: '',
+                clima: '',
+                aparicao: ''
+            },
+            climas: [
+                "arid",
+                "temperate",
+                "tropical",
+                "frozen",
+                "hot",
+                "murky",
+                "windy",
+                "artificial",
+                "frigid",
+                "humid",
+                "moist",
+                "superhot",
+                "temperate, moist",
+                "temperate, arid, windy"
+            ]
         };
     }
 
     componentDidMount() {
-        // let id = Math.floor(Math.random() * (61 - 1) + 1);
-        // console.log(id);
-        // fetch(`https://swapi.co/api/planets/${id}/`)
-        //     .then(res => res.json())
-        //     .then((result) => {
-        //         this.setState({
-        //             isLoaded: true,
-        //             planeta: result
-        //         });
-        //     }, (error) => {
-        //         this.setState({
-        //             isLoaded: true,
-        //             error
-        //         });
-        //     }
-        //     );
-        this.trocaPlaneta();
+        this.getPlaneta();
     }
 
-    // componentWillReceiveProps(nextProps) {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.id !== prevState.id) {
+            this.getPlaneta();
+        }
+    }
 
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentWillUpdate(nextProps, nextState) {
-
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-
-    // }
-
-    // componentWillUnmount() {
-
-    // }
-
-    trocaPlaneta = () => {
-        let id = Math.floor(Math.random() * (61 - 1) + 1);
-        console.log(id);
-        fetch(`https://swapi.co/api/planets/${id}/`)
+    getPlaneta() {
+        fetch(`https://swapi.co/api/planets/${this.state.id}/`)
             .then(res => res.json())
-            .then((result) => {
+            .then(result => {
                 this.setState({
                     isLoaded: true,
-                    planeta: result
+                    planeta: result,
+                    estrelou: Object.keys(result.films)
                 });
-            }, (error) => {
+            }, error => {
                 this.setState({
                     isLoaded: true,
                     error
@@ -71,8 +65,13 @@ class Cards extends Component {
             );
     }
 
+    trocaPlaneta() {
+        this.setState({ id: Math.floor(Math.random() * (61 - 1) + 1) });
+    }
+
     render() {
-        const { error, isLoaded, planeta } = this.state;
+        const { error, isLoaded, planeta, climas, estrelou } = this.state;
+
         if (error) { return (<div className="alert alert-danger">Error: {error.message}</div>); }
         else if (!isLoaded) { return <div>Carregando...</div>; }
         else {
@@ -83,20 +82,23 @@ class Cards extends Component {
                             <h5 className="card-title">{planeta.name}</h5>
                         </div>
                         <div className="card-body">
-                            <p className="card-text">{planeta.population}</p>
-                            <p className="card-text">{planeta.climate}</p>
-                            <p className="card-text">Apareceu em props.aparicoes Filmes</p>
+                            <form onSubmit={this.handleSubmit}>
+                                <input className="form-control" type="text" onChange={this.handleChange} value={this.state.resposta.populacao} placeholder="Qual a População?" />
+                                <p className="card-text">{planeta.population}</p>
+                                <label htmlFor="aparicao">Qual o Clima?</label>
+                                <Selecao data={climas}/>
+                                <p className="card-text">{planeta.climate}</p>
+                                <label htmlFor="aparicao">Apareceu em quantos filmes?</label>
+                                <input className="form-control" type="number" onChange={this.handleChange} value={this.state.resposta.aparicao} placeholder="Quantos filmes?"/>
+                                <p className="card-text">Apareceu em {estrelou.length} Filmes</p>
+                            </form>
                         </div>
                     </div>
-                    <Button />
+                    <Button troca={this.trocaPlaneta} />
                 </div>
             );
         }
     }
 }
-
-Cards.propTypes = {
-
-};
 
 export default Cards;
