@@ -7,17 +7,16 @@ class Cards extends Component {
         super(props);
 
         this.trocaPlaneta = this.trocaPlaneta.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
 
         this.state = {
             error: null,
             isLoaded: false,
             planeta: [],
             id: Math.floor(Math.random() * (61 - 1) + 1),
-            resposta: {
-                populacao: '',
-                clima: '',
-                aparicao: ''
-            },
+            playerPopulacao: '',
+            playerClima: '',
+            playerAparicao: '',
             climas: [
                 "arid",
                 "temperate",
@@ -69,6 +68,12 @@ class Cards extends Component {
         this.setState({ id: Math.floor(Math.random() * (61 - 1) + 1) });
     }
 
+    handleInputChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
     render() {
         const { error, isLoaded, planeta, climas, estrelou } = this.state;
 
@@ -83,13 +88,13 @@ class Cards extends Component {
                         </div>
                         <div className="card-body">
                             <form onSubmit={this.handleSubmit}>
-                                <input className="form-control" type="text" onChange={this.handleChange} value={this.state.resposta.populacao} placeholder="Qual a População?" />
+                                <input name="playerPopulacao" className="form-control" type="text" onChange={this.handleInputChange} value={this.state.playerPopulacao} placeholder="Qual a População?" />
                                 <p className="card-text">{planeta.population}</p>
-                                <label htmlFor="aparicao">Qual o Clima?</label>
-                                <Selecao data={climas}/>
+                                <label htmlFor="clima">Qual o Clima?</label>
+                                <Selecao data={climas} valor={this.state.playerClima} onChangeFunction={this.handleInputChange}/>
                                 <p className="card-text">{planeta.climate}</p>
                                 <label htmlFor="aparicao">Apareceu em quantos filmes?</label>
-                                <input className="form-control" type="number" onChange={this.handleChange} value={this.state.resposta.aparicao} placeholder="Quantos filmes?"/>
+                                <input name="playerAparicao" className="form-control" type="number" onChange={this.handleInputChange} value={this.state.playerAparicao} placeholder="Quantos filmes?"/>
                                 <p className="card-text">Apareceu em {estrelou.length} Filmes</p>
                             </form>
                         </div>
