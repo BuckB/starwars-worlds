@@ -9,10 +9,13 @@ class Selecao extends Component {
     render() {
         const climas = this.props.data;
         const climasList = climas.map((clima) =>
-            <option value={clima.toString()}>{clima}</option>
+            <option key={clima.toString()} value={clima.toString()}>{clima}</option>
         );
         return (
-            <select name="playerClima" value={this.props.valor} onChange={this.props.onChangeFunction}>{climasList}</select>
+            <select className="form-control" name="playerClima" value={this.props.valor} onChange={this.props.onChangeFunction} required>
+                <option value="" disabled>{this.props.placeholder}</option>
+                {climasList}
+            </select>
         );
     }
 }

@@ -87,11 +87,10 @@ class Cards extends Component {
                             <h5 className="card-title">{planeta.name}</h5>
                         </div>
                         <div className="card-body">
-                            <form onSubmit={this.handleSubmit}>
+                            <form className="planetaForm" onSubmit={this.handleSubmit}>
                                 <input name="playerPopulacao" className="form-control" type="text" onChange={this.handleInputChange} value={this.state.playerPopulacao} placeholder="Qual a População?" />
                                 <p className="card-text">{planeta.population}</p>
-                                <label htmlFor="clima">Qual o Clima?</label>
-                                <Selecao data={climas} valor={this.state.playerClima} onChangeFunction={this.handleInputChange}/>
+                                <Selecao data={climas} valor={this.state.playerClima} onChangeFunction={this.handleInputChange} placeholder={"Qual é o Cilma?"}/>
                                 <p className="card-text">{planeta.climate}</p>
                                 <label htmlFor="aparicao">Apareceu em quantos filmes?</label>
                                 <input name="playerAparicao" className="form-control" type="number" onChange={this.handleInputChange} value={this.state.playerAparicao} placeholder="Quantos filmes?"/>
