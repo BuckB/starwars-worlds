@@ -12,7 +12,7 @@ class Selecao extends Component {
             <option key={clima.toString()} value={clima.toString()}>{clima}</option>
         );
         return (
-            <select className="form-control" name="playerClima" value={this.props.valor} onChange={this.props.onChangeFunction} required>
+            <select className={this.props.class} name={this.props.name} value={this.props.value} onChange={this.props.onChangeFunction} >
                 <option value="" disabled>{this.props.placeholder}</option>
                 {climasList}
             </select>
