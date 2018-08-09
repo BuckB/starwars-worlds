@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import Selecao from './Selecao';
+import Input from './Input';
 
 class Cards extends Component {
     constructor(props) {
@@ -134,9 +135,8 @@ class Cards extends Component {
                         <div className="card-body">
                             <form id="planeta-form" noValidate>
                                 <div className="form-group">
-                                    <input name="populacao" className="form-control" type="text" onChange={this.handleInputChange} value={this.state.player_populacao} placeholder="Qual a População?" />
-                                    { this.state.valida_populacao && (<div className="valid-feedback card-text" style={{display: 'block'}}> Yoda: "Correto você está. Siiiiiiiim."</div>) }
-                                    { this.state.valida_populacao === false && (<div className="invalid-feedback card-text" style={{display: 'block'}}> Yoda: "hmmm...{planeta.population} a resposta correta é."</div>) }
+                                    <Input name={"populacao"} class={"form-control"} type={"text"} onChangeFunction={this.handleInputChange} value={this.state.player_populacao} placeholder={"Qual é a População?"}
+                                     validacao={this.state.valida_populacao} checkValidacao={planeta.population}/>
                                 </div>
                                 <div className="form-group">
                                     <Selecao data={climas} name={"clima"} class={"form-control"} value={this.state.player_clima} onChangeFunction={this.handleInputChange} placeholder={"Qual é o Clima?"} />
@@ -145,9 +145,8 @@ class Cards extends Component {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="aparicao">Apareceu em quantos filmes?</label>
-                                    <input name="aparicao" className="form-control" type="number" onChange={this.handleInputChange} value={this.state.player_aparicao} placeholder="Quantos filmes?" />
-                                    { this.state.valida_aparicao && (<div className="valid-feedback card-text" style={{display: 'block'}}> Yoda: "Em {estrelou.length} filmes, {planeta.name} apareceu. De parabéns você está!"</div>) }
-                                    { this.state.valida_aparicao === false && (<div className="invalid-feedback card-text" style={{display: 'block'}}> Yoda: "Em {estrelou.length} filmes, {planeta.name} apareceu."</div>) }
+                                    <Input name={"aparicao"} class={"form-control"} type={"number"} onChangeFunction={this.handleInputChange} value={this.state.player_aparicao} placeholder={"Quantos filmes?"}
+                                    validacao={this.state.valida_aparicao} checkValidacao={estrelou.length} />
                                 </div>
                             </form>
                         </div>
