@@ -38,6 +38,7 @@ class Cards extends Component {
                 "artificial, temperate",
                 "temperate, moist",
                 "temperate, arid, windy",
+                "temperate, arid",
                 "temperate, arid, subartic",
                 "temperate, artic",
                 "tropical, temperate"
