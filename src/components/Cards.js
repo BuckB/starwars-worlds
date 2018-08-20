@@ -10,6 +10,8 @@ class Cards extends Component {
         this.trocaPlaneta = this.trocaPlaneta.bind(this);
         /** trata a mudança de estado gerada pelos inputs */
         this.handleInputChange = this.handleInputChange.bind(this);
+        /** trata input no focus out */
+        this.handleBlur = this.handleBlur.bind(this);
 
         this.state = {
             error: null,
@@ -89,9 +91,15 @@ class Cards extends Component {
 
     handleInputChange(event) {
         let nome = `player_`+[event.target.name];
+
         this.setState({
             [nome]: event.target.value
         });
+        /** populacao eu quero que valide quando tira o foco - handleBlur - e não onChange */
+        (event.target.name !== 'populacao' && this.validaResposta(event));
+    }
+
+    handleBlur(event) {
         this.validaResposta(event);
     }
 
@@ -130,22 +138,24 @@ class Cards extends Component {
                 <div>
                     <div className="card mb-4 shadow-sm">
                         <div className="card-header text-center">
-                            <h5 className="card-title">{planeta.name}</h5>
+                            <h5 className="card-title">{(planeta.name === "unknown")? "Desconhecido" : planeta.name}</h5>
                         </div>
                         <div className="card-body">
                             <form id="planeta-form" noValidate>
                                 <div className="form-group">
-                                    <Input name={"populacao"} class={"form-control"} type={"text"} onChangeFunction={this.handleInputChange} value={this.state.player_populacao} placeholder={"Qual é a População?"}
+                                    <label htmlFor="populacao">População</label>
+                                    <Input name={"populacao"} class={"form-control"} type={"text"} onChangeFunction={this.handleInputChange} onBlurFunction={this.handleBlur} value={this.state.player_populacao} placeholder={(planeta.population === "unknown") ? "Desconhecido" : "Qual é a População?"}
                                      validacao={this.state.valida_populacao} checkValidacao={planeta.population}/>
                                 </div>
                                 <div className="form-group">
-                                    <Selecao data={climas} name={"clima"} class={"form-control"} value={this.state.player_clima} onChangeFunction={this.handleInputChange} placeholder={"Qual é o Clima?"} />
+                                    <label htmlFor="clima">Clima</label>
+                                    <Selecao data={climas} name={"clima"} class={"form-control"} value={this.state.player_clima} onChangeFunction={this.handleInputChange} placeholder={(planeta.climate === "unknown")? "Desconhecido" : "Qual é o Clima?"} />
                                     { this.state.valida_clima && (<div className="valid-feedback card-text" style={{display: 'block'}}> Yoda: "Aliada sua é a Força. E poderosa aliada ela é."</div>) }
                                     { this.state.valida_clima === false && (<div className="invalid-feedback card-text" style={{display: 'block'}}> Yoda: "{planeta.climate} a resposta certa é. Concentrar você precisa."</div>) }
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="aparicao">Apareceu em quantos filmes?</label>
-                                    <Input name={"aparicao"} class={"form-control"} type={"number"} onChangeFunction={this.handleInputChange} value={this.state.player_aparicao} placeholder={"Quantos filmes?"}
+                                    <Input name={"aparicao"} class={"form-control"} type={"number"} onChangeFunction={this.handleInputChange} value={this.state.player_aparicao} placeholder={(planeta.name === "unknown")? "Desconhecido" : "Quantos filmes?"}
                                     validacao={this.state.valida_aparicao} checkValidacao={estrelou.length} />
                                 </div>
                             </form>
